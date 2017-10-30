@@ -8,6 +8,7 @@ def empty_graph():
     g = Graph()
     return g
 
+
 @pytest.fixture(params=[0,10,20])
 def graph(request):
     g = Graph()
@@ -15,9 +16,11 @@ def graph(request):
         g.add_node('node-{}'.format(i))
     return g
 
+
 def test_empty_graph(empty_graph):
     print(empty_graph)
     assert empty_graph.node_count() == 0
+
 
 def test_node_insert(graph):
     old_node_count = graph.node_count()
@@ -27,11 +30,13 @@ def test_node_insert(graph):
     new_node_count = graph.node_count()
     assert new_node_count - old_node_count == 3
 
+
 def test_node_duplicate_insert(graph):
     graph.add_node('single')
     graph.add_node('duplicate')
     with pytest.raises(GraphException):
         graph.add_node('duplicate')
+
 
 def test_edge_insert(graph):
     graph.add_node('A')
@@ -44,6 +49,7 @@ def test_edge_invalid(graph):
     with pytest.raises(GraphException):
         graph.add_edge('A', 'missing')
 
+
 def test_edge_insert_duplicate(graph):
     for i in ['A', 'B', 'C']:
         graph.add_node(i)
@@ -51,6 +57,7 @@ def test_edge_insert_duplicate(graph):
     graph.add_edge('B', 'C')
     with pytest.raises(GraphException):
         graph.add_edge('A', 'B')
+
 
 def test_edge_is_stored(graph):
     for i in ['A', 'B', 'C']:
