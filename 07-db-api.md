@@ -1,6 +1,6 @@
 # DB-API
 
-Vytvořit skript, který bude stahovat letecká data 
+Vytvořte skript, který bude stahovat letecká data 
 o počasí a ukládat teplotu do relační databáze pro další
 zpracování.
 
@@ -72,12 +72,26 @@ Pro rozparsování XML použijte např. modul [ElementTree].
 
 V XML dodávaném službou aviationweather.gov  je několik měření.
 
-```python
+```pythonstub
 import xml.etree.ElementTree as etree
 
 tree = etree.fromstring(xml_string)
 for element in tree.findall('.//data/METAR'):
     temperature = element.find('./temp_c').text
+```
+
+## Zpracování času
+
+Nástroje pro práci s časem jsou v module [datetime]. 
+
+```python
+from datetime import datetime
+
+# zparsovat string na datetime
+measured = datetime.strptime('2017-11-06T11:00:00Z', '%Y-%m-%dT%H:%M:%SZ')
+print(measured)
+# vypíše UNIX timestamp
+print(measured.timestamp()) 
 ```
 
 ## `Unable to import requests` 
@@ -102,3 +116,4 @@ response_body = url.read()
 [ElementTree]: https://docs.python.org/3.5/library/xml.etree.elementtree.html
 [urllib.request]: https://docs.python.org/3.5/library/urllib.request.html#module-urllib.request
 [sqlite3]: https://docs.python.org/3.5/library/sqlite3.html
+[datetime]: https://docs.python.org/3.5/library/datetime.html
